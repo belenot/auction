@@ -1,0 +1,8 @@
+node_modules
+/frontend/build
+/server/build
+/server/src/static/js/bundle.js
+/server/src/static/js/bundle.js.map
+\#*\#
+*~
+.vscode

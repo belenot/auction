@@ -1,0 +1,11 @@
+{
+  "watch": [
+    "./src/interfaces",
+    "./src/models",
+    "./src/routers",
+    "./src/passport-config.ts",
+    "./src/server.ts"
+  ],
+  "ext": "ts",
+  "exec": "ts-node ./src/server.ts"
+}

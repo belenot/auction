@@ -1,0 +1,45 @@
+import { Router } from 'express';
+import { User } from '../models';
+import * as bcrypt from 'bcrypt';
+import passport = require('passport');
+import { withoutField } from '../utils';
+import { IUser, UserWithoutPassword } from '../interfaces';
+const router = Router();
+
+router.route('/')
+  .put(async (req, res) => {
+    const username = req.body.username;
+    const password = req.body.password;
+    console.log('put user');
+    try {
+      const hashedPassword = await bcrypt.hash(password, 10);
+      const user = new User();
+      user.username = username;
+      user.password = hashedPassword;
+      try {
+        const savedUser = await user.save();
+        return res.status(200).json();
+      } catch (e) {
+        console.log('Error: ' + e);
+        return res.status(400).json("Error: " + e)
+      }
+    } catch (e) {
+      console.log("Error: " + e);
+      return res.status(500).json('Error');
+    }
+  })
+  .post(passport.authenticate('local'), (req, res) => res.json())
+  .get((req, res) => {
+    if (req.user) {
+      res.json(withoutField((req.user as IUser).toJSON(), "password"));
+    } else {
+      res.status(401).json('Not authorized');
+    }
+  })
+router.delete('/logout', (req, res) => {
+  const authenticated = req.isAuthenticated()
+  req.logout()
+  res.json({ logout: authenticated });
+})
+
+export const usersRouter = router;
