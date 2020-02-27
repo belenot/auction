@@ -6,6 +6,9 @@ import { handleSignin, signinRequestAsync, signinRequest, initializeRequestAsync
 import { SyncAction, AppThunkAction, RootAction } from '../actions/types';
 import { Signin } from './Signin';
 import { Login } from './Login';
+import Container from '@material-ui/core/Container'
+import { Grid } from '@material-ui/core';
+
 
 const App: React.FC<any> = (props: any) => {
   const state = useSelector((state: RootState) => state.system)
@@ -16,14 +19,18 @@ const App: React.FC<any> = (props: any) => {
     }
   }, [])
   return (
-    <div>
-      {state.loggedIn ?
-        <div>logged</div>
-        :
-        <Login />
-      }
-
-    </div>
+    <Grid container>
+      <Grid item xs={7}>
+        lol
+      </Grid>
+      <Grid item xs={5}>
+        {state.loggedIn ?
+          <div>logged</div>
+          :
+          <Login />
+        }
+      </Grid>
+    </Grid>
   )
 }
 

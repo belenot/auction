@@ -7,6 +7,7 @@ import { RootAction, SyncAction, AppThunkAction } from "../actions/types";
 import { Signin } from "./Signin";
 import { Signup } from "./Signup";
 import { loginSwitch } from "../actions";
+import { Grid } from "@material-ui/core";
 
 
 export const Login: React.FC = (props) => {
@@ -20,12 +21,16 @@ export const Login: React.FC = (props) => {
   }
 
   return (
-    <div>
-      {state.page === "signin" ?
-        <Signin /> :
-        <Signup />
-      }
-      <button onClick={onClick}>{"To " + (state.page === "signin" ? "Sign Up" : "Sign In")}</button>
-    </div>
+    <Grid container>
+      <Grid item xs={12}>
+        {state.page === "signin" ?
+          <Signin /> :
+          <Signup />
+        }
+      </Grid>
+      <Grid item xs={12} alignItems={"center"}>
+        <button onClick={onClick}>{"To " + (state.page === "signin" ? "Sign Up" : "Sign In")}</button>
+      </Grid>
+    </Grid>
   )
 }

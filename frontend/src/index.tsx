@@ -5,6 +5,7 @@ import { Provider } from 'react-redux';
 import { rootReducer } from './reducers';
 import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
+import { Container } from '@material-ui/core';
 
 const store = createStore(
   rootReducer,
@@ -17,7 +18,9 @@ const store = createStore(
 window.onload = () => {
   ReactDOM.render(
     <Provider store={store}>
-      <App />
+      <Container>
+        <App />
+      </Container>
     </Provider>,
     document.querySelector('#root')
   );
