@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { RootAction } from '../actions/types';
 import { RootState } from '../reducers';
 import { handleSignin, signinRequestAsync } from '../actions';
+import { Grid, Typography, TextField, Button } from '@material-ui/core';
 
 export const Signin: React.FC = (props) => {
   const dispatch = useDispatch<React.Dispatch<RootAction>>();
@@ -19,14 +20,16 @@ export const Signin: React.FC = (props) => {
     dispatch(signinRequestAsync(state.username, state.password))
   }
   return (
-    <div>
-      <form>
-        <label>Username</label>
-        <input type='text' name='username' value={state.username} onChange={(e) => changeUsername(e.target.value)} />
-        <label>Password</label>
-        <input type='password' name='password' value={state.password} onChange={(e) => changePassword(e.target.value)} />
-        <button type='submit' onClick={e => onSubmit(e)}>Sign In</button>
-      </form>
-    </div>
+    <Grid component="form" container justify="center" alignItems="center" direction="column" spacing={2}>
+      <Grid item>
+        <TextField variant="outlined" label="Username" type='text' name='username' value={state.username} onChange={(e) => changeUsername(e.target.value)} />
+      </Grid>
+      <Grid item>
+        <TextField variant="outlined" label="Password" type='password' name='password' value={state.password} onChange={(e) => changePassword(e.target.value)} />
+      </Grid>
+      <Grid item>
+        <Button color="primary" variant="contained" type='submit' onClick={e => onSubmit(e)}>Sign In</Button>
+      </Grid>
+    </Grid>
   )
 }

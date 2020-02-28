@@ -8,6 +8,8 @@ import { Signin } from './Signin';
 import { Login } from './Login';
 import Container from '@material-ui/core/Container'
 import { Grid } from '@material-ui/core';
+import { fullHeight } from '../styles';
+import { LoginBanner } from './LoginBanner';
 
 
 const App: React.FC<any> = (props: any) => {
@@ -19,9 +21,9 @@ const App: React.FC<any> = (props: any) => {
     }
   }, [])
   return (
-    <Grid container>
+    <Grid container style={fullHeight}>
       <Grid item xs={7}>
-        lol
+        <LoginBanner />
       </Grid>
       <Grid item xs={5}>
         {state.loggedIn ?
