@@ -1,6 +1,7 @@
 import { ThunkAction } from "redux-thunk";
 import { RootState } from "../reducers";
 import { LoginState } from "../reducers/types";
+import { Item } from "../types";
 
 export const HANDLE_SIGNIN = 'HANDLE_SIGNIN';
 export const HANDLE_SIGNUP = 'HANDLE_SIGNUP';
@@ -13,6 +14,8 @@ export const SIGNUP_REQUEST = 'SIGNUP_REQUEST';
 export const LOGIN_SWITCH = 'LOGIN_SWITCH';
 export const INITIALIZE_SUCCESS = 'INITIALIZE_SUCCESS';
 export const INITIALIZE_FAILURE = 'INITIALIZE_FAILURE';
+export const GET_ITEMS_SUCCESS = 'GET_ITEMS_SUCCESS'
+export const GET_ITEMS_FAILURE = 'GET_ITEMS_FAILURE'
 
 export interface HandleSigninAction {
   type: typeof HANDLE_SIGNIN;
@@ -79,6 +82,19 @@ export interface InitializeFailure {
   type: typeof INITIALIZE_FAILURE;
 }
 
+export interface GetItemsSuccess {
+  type: typeof GET_ITEMS_SUCCESS;
+  payload: {
+    items: Item[]
+  }
+}
+
+export interface GetItemsFailure {
+  type: typeof GET_ITEMS_FAILURE;
+  payload: {
+    error: string;
+  }
+}
 
 /** READ ABOUT IT */
 export type AppThunkAction<ReturnType = void> =
@@ -89,5 +105,5 @@ export type AppThunkAction<ReturnType = void> =
     SyncAction
   >
 
-export type SyncAction = HandleSigninAction | HandleSignupAction | SigninRequest | SigninSuccess | SigninFailure | SignupRequest | SignupSuccess | SignupFailure | InitializeSuccess | InitializeFailure | LoginSwitch
+export type SyncAction = HandleSigninAction | HandleSignupAction | SigninRequest | SigninSuccess | SigninFailure | SignupRequest | SignupSuccess | SignupFailure | InitializeSuccess | InitializeFailure | LoginSwitch | GetItemsFailure | GetItemsSuccess
 export type RootAction = SyncAction | AppThunkAction

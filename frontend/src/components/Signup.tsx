@@ -22,6 +22,10 @@ export const Signup: React.FC = (props) => {
   return (
     <Grid component="form" container justify="center" alignItems="center" direction="column" spacing={2}>
       <Grid item>
+        <Typography color={"secondary"} variant={"h4"}>Welcome to</Typography>
+        <Typography color={"primary"} variant={"h2"}>Auction</Typography>
+      </Grid>
+      <Grid item>
         <TextField variant="outlined" label="Username" type='text' name='username' value={state.username} onChange={(e) => changeUsername(e.target.value)} />
       </Grid>
       <Grid item>

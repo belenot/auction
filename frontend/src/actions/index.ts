@@ -1,6 +1,7 @@
-import { SyncAction, HANDLE_SIGNIN, HANDLE_SIGNUP, AppThunkAction, SIGNIN_REQUEST, SIGNIN_SUCCESS, SIGNIN_FAILURE, INITIALIZE_SUCCESS, INITIALIZE_FAILURE, SIGNUP_REQUEST, SIGNUP_FAILURE, SIGNUP_SUCCESS, LoginSwitch } from "./types";
+import { SyncAction, HANDLE_SIGNIN, HANDLE_SIGNUP, AppThunkAction, SIGNIN_REQUEST, SIGNIN_SUCCESS, SIGNIN_FAILURE, INITIALIZE_SUCCESS, INITIALIZE_FAILURE, SIGNUP_REQUEST, SIGNUP_FAILURE, SIGNUP_SUCCESS, LoginSwitch, GET_ITEMS_SUCCESS, GET_ITEMS_FAILURE } from "./types";
 import { default as axios } from 'axios';
 import { LoginState } from "../reducers/types";
+import { Item } from "../types";
 
 export function handleSignin(username: string, password: string): SyncAction {
   return { type: HANDLE_SIGNIN, payload: { username, password } }
@@ -59,6 +60,24 @@ export function initializeFailure(): SyncAction {
   }
 }
 
+export function getItemsSuccess(items: Item[]): SyncAction {
+  return {
+    type: GET_ITEMS_SUCCESS,
+    payload: {
+      items
+    }
+  }
+}
+
+export function getItemsFailure(error: string): SyncAction {
+  return {
+    type: GET_ITEMS_FAILURE,
+    payload: {
+      error
+    }
+  }
+}
+
 export function signinRequestAsync(username: string, password: string): AppThunkAction {
   return function (dispatch, getState) {
     dispatch(signinRequest())
@@ -103,5 +122,16 @@ export function initializeRequestAsync(): AppThunkAction {
         }
       })
       .catch(err => dispatch(initializeSuccess()))
+  }
+}
+
+export function getItemsRequestAsync(): AppThunkAction {
+  return async function (dispatch, getState) {
+    try {
+      const items: Item[] = await axios.get('/items').then(r => r.data as Item[]);
+      dispatch(getItemsSuccess(items));
+    } catch (error) {
+      dispatch(getItemsFailure(error));
+    }
   }
 }

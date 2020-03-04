@@ -29,10 +29,10 @@ export const Login: React.FC = (props) => {
 
   return (
     <Grid container style={{ ...fullHeight, ...loginStyle }} direction="column" justify="center" alignItems="center" spacing={5} >
-      <Grid item>
+      {/* <Grid item>
         <Typography color={"secondary"} variant={"h4"}>Log into</Typography>
         <Typography color={"primary"} variant={"h2"}>Auction</Typography>
-      </Grid>
+      </Grid> */}
       <Grid item>
         {state.page === "signin" ?
           <Signin /> :

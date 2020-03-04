@@ -1,3 +1,5 @@
+import { Item } from "../types";
+
 /**
  * States
  */
@@ -24,4 +26,8 @@ export interface SignupState {
 
 export interface LoginState {
   page: "signin" | "signup"
+}
+
+export interface ItemsListState {
+  items: Item[]
 }

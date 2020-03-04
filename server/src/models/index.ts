@@ -5,7 +5,9 @@ import { IItem, IUser } from "../interfaces";
 const ItemSchema: Schema = new Schema({
   name: { type: String, required: true },
   description: { type: String, required: true },
-  price: { type: Number, required: true }
+  price: { type: Number, required: true },
+  state: { type: String, required: true, default: 'active' },
+  owner_id: { type: String, required: true }
 })
 export const Item = mongoose.model<IItem>('Item', ItemSchema);
 

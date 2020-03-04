@@ -10,6 +10,7 @@ import Container from '@material-ui/core/Container'
 import { Grid } from '@material-ui/core';
 import { fullHeight } from '../styles';
 import { LoginBanner } from './LoginBanner';
+import { ItemsList } from './ItemsList';
 
 
 const App: React.FC<any> = (props: any) => {
@@ -22,16 +23,19 @@ const App: React.FC<any> = (props: any) => {
   }, [])
   return (
     <Grid container style={fullHeight}>
-      <Grid item xs={7}>
-        <LoginBanner />
-      </Grid>
-      <Grid item xs={5}>
-        {state.loggedIn ?
-          <div>logged</div>
-          :
-          <Login />
-        }
-      </Grid>
+      {state.loggedIn ?
+        <Grid item xs={12}>
+          <ItemsList />
+        </Grid> :
+        <React.Fragment>
+          <Grid item xs={7}>
+            <LoginBanner />
+          </Grid>
+          <Grid item xs={5}>
+            <Login />
+          </Grid>
+        </React.Fragment>
+      }
     </Grid>
   )
 }

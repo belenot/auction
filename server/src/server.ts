@@ -16,6 +16,7 @@ server.use(express.json());
 server.use(passport.initialize());
 server.use(passport.session());
 server.use('/users', usersRouter);
+server.use('/items', itemsRouter);
 server.use((req, res, next) => {
   if (!req.isAuthenticated()) return res.status(401).json({ error: "not authenticated" });
   else next();
