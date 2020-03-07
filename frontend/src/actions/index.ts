@@ -1,6 +1,6 @@
-import { SyncAction, HANDLE_SIGNIN, HANDLE_SIGNUP, AppThunkAction, SIGNIN_REQUEST, SIGNIN_SUCCESS, SIGNIN_FAILURE, INITIALIZE_SUCCESS, INITIALIZE_FAILURE, SIGNUP_REQUEST, SIGNUP_FAILURE, SIGNUP_SUCCESS, LoginSwitch, GET_ITEMS_SUCCESS, GET_ITEMS_FAILURE } from "./types";
+import { SyncAction, HANDLE_SIGNIN, HANDLE_SIGNUP, AppThunkAction, SIGNIN_REQUEST, SIGNIN_SUCCESS, SIGNIN_FAILURE, INITIALIZE_SUCCESS, INITIALIZE_FAILURE, SIGNUP_REQUEST, SIGNUP_FAILURE, SIGNUP_SUCCESS, LoginSwitch, GET_ITEMS_SUCCESS, GET_ITEMS_FAILURE, CHANGE_PAGE } from "./types";
 import { default as axios } from 'axios';
-import { LoginState } from "../reducers/types";
+import { LoginState, SystemState } from "../reducers/types";
 import { Item } from "../types";
 
 export function handleSignin(username: string, password: string): SyncAction {
@@ -74,6 +74,15 @@ export function getItemsFailure(error: string): SyncAction {
     type: GET_ITEMS_FAILURE,
     payload: {
       error
+    }
+  }
+}
+
+export function changePage(page: SystemState['page']): SyncAction {
+  return {
+    type: CHANGE_PAGE,
+    payload: {
+      page
     }
   }
 }

@@ -5,9 +5,13 @@ import { Item } from "../types";
  */
 
 export interface SystemState {
-  loggedIn: boolean,
-  initialized: boolean,
-  userId: string
+  loggedIn: boolean;
+  initialized: boolean;
+  userId: string;
+  username: string;
+  wallet: number;
+  items: Item[];
+  page: 'ADD_ITEM' | 'ITEMS_LIST' | 'PROFILE';
 }
 
 export interface SigninState {

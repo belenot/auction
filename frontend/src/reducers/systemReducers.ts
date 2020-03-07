@@ -5,7 +5,11 @@ import { SyncAction } from '../actions/types';
 const initState: SystemState = {
   loggedIn: false,
   initialized: false,
-  userId: ''
+  userId: '',
+  items: [],
+  username: '',
+  wallet: 0,
+  page: "ITEMS_LIST"
 }
 
 export function systemReducer(state = initState, action: SyncAction): SystemState {
@@ -15,7 +19,9 @@ export function systemReducer(state = initState, action: SyncAction): SystemStat
     case "INITIALIZE_FAILURE":
       return { ...state, initialized: false }
     case "SIGNIN_SUCCESS":
-      return { ...state, loggedIn: true }
+      return { ...state, loggedIn: true, userId: action.payload.id, username: action.payload.username }
+    case "CHANGE_PAGE":
+      return { ...state, page: action.payload.page }
     default:
       return state
   }
