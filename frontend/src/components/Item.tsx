@@ -2,7 +2,7 @@ import React from 'react';
 import { Grid, Typography, Paper, Card, CardHeader, CardContent, Toolbar, Button, CardActions, useTheme } from '@material-ui/core';
 import { Item as ItemInterface } from '../types';
 import { makeStyles } from '@material-ui/styles';
-import { useAuctionTheme, auctionTheme } from '../styles';
+import { auctionTheme } from '../styles';
 
 export interface ItemProps {
   item: ItemInterface;

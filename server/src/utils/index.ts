@@ -4,3 +4,5 @@ export function withoutField(obj: any, field: string): any {
   const { [field]: any, ...rest } = obj;
   return rest;
 }
+
+// export function saveFile(file:)

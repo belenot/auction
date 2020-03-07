@@ -3,6 +3,7 @@ node_modules
 /server/build
 /server/src/static/js/bundle.js
 /server/src/static/js/bundle.js.map
+/server/uploads
 \#*\#
 *~
 .vscode

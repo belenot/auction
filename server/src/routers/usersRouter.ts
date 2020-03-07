@@ -1,9 +1,9 @@
 import { Router } from 'express';
-import { User } from '../models';
+import { User, Profile } from '../models';
 import * as bcrypt from 'bcrypt';
 import passport = require('passport');
 import { withoutField } from '../utils';
-import { IUser, UserWithoutPassword } from '../interfaces';
+import { IUser, UserWithoutPassword, IProfile } from '../interfaces';
 const router = Router();
 
 router.route('/')
@@ -14,8 +14,13 @@ router.route('/')
     try {
       const hashedPassword = await bcrypt.hash(password, 10);
       const user = new User();
+      const defaultProfile = new Profile();
+      defaultProfile.wallet = 0;
+      defaultProfile.items = [];
+      defaultProfile.save();
       user.username = username;
       user.password = hashedPassword;
+      user.profile_id = defaultProfile._id;
       try {
         const savedUser = await user.save();
         return res.status(200).json();
@@ -41,5 +46,17 @@ router.delete('/logout', (req, res) => {
   req.logout()
   res.json({ logout: authenticated });
 })
+router.route('/profile')
+  .post(async (req, res) => {
+    const body = req.body as IProfile;
+    const user = req.user as IUser;
+    const profile = await Profile.findById(user.profile_id);
+    profile.items = body.items;
+    profile.wallet = body.wallet;
+    res.json(await profile.save());
+  })
+  .get(async (req, res) => {
+    res.send(await Profile.findById((req.user as IUser).profile_id));
+  })
 
 export const usersRouter = router;
