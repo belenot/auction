@@ -21,5 +21,9 @@ export interface UserWithoutPassword extends Document {
 
 export interface IProfile extends Document {
   wallet: number;
-  items: IItem[];
+  items: {
+    bought: IItem[];
+    betted: IItem[];
+    own: IItem[];
+  }
 }

@@ -1,7 +1,7 @@
-import { SyncAction, HANDLE_SIGNIN, HANDLE_SIGNUP, AppThunkAction, SIGNIN_REQUEST, SIGNIN_SUCCESS, SIGNIN_FAILURE, INITIALIZE_SUCCESS, INITIALIZE_FAILURE, SIGNUP_REQUEST, SIGNUP_FAILURE, SIGNUP_SUCCESS, LoginSwitch, GET_ITEMS_SUCCESS, GET_ITEMS_FAILURE, CHANGE_PAGE, HANDLE_ADD_ITEM, ADD_ITEM_SUCCESS, ADD_ITEM_FAILURE } from "./types";
+import { SyncAction, HANDLE_SIGNIN, HANDLE_SIGNUP, AppThunkAction, SIGNIN_REQUEST, SIGNIN_SUCCESS, SIGNIN_FAILURE, INITIALIZE_SUCCESS, INITIALIZE_FAILURE, SIGNUP_REQUEST, SIGNUP_FAILURE, SIGNUP_SUCCESS, LoginSwitch, GET_ITEMS_SUCCESS, GET_ITEMS_FAILURE, CHANGE_PAGE, HANDLE_ADD_ITEM, ADD_ITEM_SUCCESS, ADD_ITEM_FAILURE, SIGNOUT_SUCCESS, SIGNOUT_FAILURE, GET_PROFILE_SUCCESS, GET_PROFILE_FAILURE, HANDLE_CHANGE_WALLET, CHANGE_WALLET_SUCCESS, CHANGE_WALLET_FAILURE } from "./types";
 import { default as axios } from 'axios';
 import { LoginState, SystemState, AddItemState } from "../reducers/types";
-import { Item } from "../types";
+import { Item, Profile } from "../types";
 
 export function handleSignin(username: string, password: string): SyncAction {
   return { type: HANDLE_SIGNIN, payload: { username, password } }
@@ -114,6 +114,63 @@ export function addItemFailure(error: string): SyncAction {
   }
 }
 
+export function signoutSuccess(): SyncAction {
+  return {
+    type: SIGNOUT_SUCCESS
+  }
+}
+
+export function signoutFailure(): SyncAction {
+  return {
+    type: SIGNOUT_FAILURE
+  }
+}
+
+export function getProfileSuccess(profile: Profile): SyncAction {
+  return {
+    type: GET_PROFILE_SUCCESS,
+    payload: {
+      profile
+    }
+  }
+}
+
+export function getProfileFailure(error: any): SyncAction {
+  return {
+    type: GET_PROFILE_FAILURE,
+    payload: {
+      error
+    }
+  }
+}
+
+export function handleChangeWallet(wallet: number): SyncAction {
+  return {
+    type: HANDLE_CHANGE_WALLET,
+    payload: {
+      wallet
+    }
+  }
+}
+
+export function changeWalletSuccess(wallet: number): SyncAction {
+  return {
+    type: CHANGE_WALLET_SUCCESS,
+    payload: {
+      wallet
+    }
+  }
+}
+
+export function changeWalletFailure(error: string): SyncAction {
+  return {
+    type: CHANGE_WALLET_FAILURE,
+    payload: {
+      error
+    }
+  }
+}
+
 export function signinRequestAsync(username: string, password: string): AppThunkAction {
   return function (dispatch, getState) {
     dispatch(signinRequest())
@@ -145,7 +202,7 @@ export function signupRequestAsync(username: string, password: string): AppThunk
 }
 
 export function initializeRequestAsync(): AppThunkAction {
-  return function (dispatch, getState) {
+  return async function (dispatch, getState) {
     axios.get('/users')
       .then(r => {
         dispatch(initializeSuccess())
@@ -153,9 +210,7 @@ export function initializeRequestAsync(): AppThunkAction {
       }).then(r => {
         if (r.data._id) {
           dispatch(signinSuccess(r.data.id, r.data.username))
-        } else {
-          //dispatch(signinFailure(''))//
-        }
+        } else { }
       })
       .catch(err => dispatch(initializeSuccess()))
   }
@@ -191,3 +246,36 @@ export function addItemRequestAsync(form: AddItemState): AppThunkAction {
   }
 }
 
+export function signoutRequestAsync(): AppThunkAction {
+  return async (dispatch, getState) => {
+    try {
+      await axios.delete('/users/logout')
+      dispatch(signoutSuccess());
+    } catch (e) {
+      console.log(e);
+    }
+  }
+}
+
+export function getProfileRequestAsync(): AppThunkAction {
+  return async (dispatch, getState) => {
+    try {
+      const profile = (await axios.get('/users/profile')).data as Profile
+      dispatch(getProfileSuccess(profile))
+    } catch (e) {
+      dispatch(getProfileFailure(e));
+    }
+  }
+}
+
+export function changeWalletRequestAsync(oldWallet: number): AppThunkAction {
+  return async (dispatch, getState) => {
+    try {
+      const data = (await axios.patch('/users/profile/wallet', { wallet: oldWallet })).data;
+      const wallet = (data as { wallet: number }).wallet;
+      return dispatch(changeWalletSuccess(wallet));
+    } catch (e) {
+      return dispatch(changeWalletFailure(e));
+    }
+  }
+}

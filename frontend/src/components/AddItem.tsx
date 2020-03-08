@@ -3,12 +3,12 @@ import { Grid, TextField, Button } from '@material-ui/core';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../reducers';
 import { Dispatch } from 'redux';
-import { RootAction } from '../actions/types';
+import { RootAction, RootDispatch } from '../actions/types';
 import { handleAddItem, addItemRequestAsync } from '../actions';
 
 export const AddItem: React.FC = () => {
   const state = useSelector((state: RootState) => state.addItem);
-  const dispatch = useDispatch<React.Dispatch<RootAction>>();
+  const dispatch = useDispatch<RootDispatch>();
 
   function handleInput(key: string, value: string | number) {
     dispatch(handleAddItem({ ...state, [key]: value }));

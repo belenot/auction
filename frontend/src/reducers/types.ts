@@ -10,7 +10,11 @@ export interface SystemState {
   userId: string;
   username: string;
   wallet: number;
-  items: Item[];
+  items: {
+    bought: Item[];
+    betted: Item[];
+    own: Item[];
+  }
   page: 'ADD_ITEM' | 'ITEMS_LIST' | 'PROFILE';
 }
 
@@ -43,4 +47,10 @@ export interface AddItemState {
   error: string;
   isRequest: boolean;
   image?: File
+}
+
+export interface ChangeWalletState {
+  wallet: number;
+  isRequest: boolean;
+  error: string;
 }

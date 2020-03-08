@@ -16,7 +16,7 @@ router.route('/')
       const user = new User();
       const defaultProfile = new Profile();
       defaultProfile.wallet = 0;
-      defaultProfile.items = [];
+      defaultProfile.items = { betted: [], bought: [], own: [] };
       defaultProfile.save();
       user.username = username;
       user.password = hashedPassword;
@@ -57,6 +57,14 @@ router.route('/profile')
   })
   .get(async (req, res) => {
     res.send(await Profile.findById((req.user as IUser).profile_id));
+  })
+router.route('/profile/wallet')
+  .patch(async (req, res) => {
+    const user = req.user as IUser;
+    const profile = await Profile.findById(user.profile_id);
+    profile.wallet = (req.body as { wallet: number }).wallet
+    await profile.save()
+    res.json({ wallet: profile.wallet });
   })
 
 export const usersRouter = router;

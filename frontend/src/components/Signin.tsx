@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { RootAction } from '../actions/types';
+import { RootAction, RootDispatch } from '../actions/types';
 import { RootState } from '../reducers';
 import { handleSignin, signinRequestAsync } from '../actions';
 import { Grid, Typography, TextField, Button } from '@material-ui/core';
 
 export const Signin: React.FC = (props) => {
-  const dispatch = useDispatch<React.Dispatch<RootAction>>();
+  const dispatch = useDispatch<RootDispatch>();
   const state = useSelector((state: RootState) => state.signin);
 
   function changeUsername(newUsername: string) {

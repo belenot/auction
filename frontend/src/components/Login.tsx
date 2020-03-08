@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../reducers";
 import { LoginState } from "../reducers/types";
 import { Dispatch } from "redux";
-import { RootAction, SyncAction, AppThunkAction } from "../actions/types";
+import { RootAction, SyncAction, AppThunkAction, RootDispatch } from "../actions/types";
 import { Signin } from "./Signin";
 import { Signup } from "./Signup";
 import { loginSwitch } from "../actions";
@@ -20,7 +20,7 @@ const loginStyle: React.CSSProperties = {
 export const Login: React.FC = (props) => {
 
   const state = useSelector<RootState, LoginState>(state => state.login);
-  const dispatch = useDispatch<React.Dispatch<RootAction>>();
+  const dispatch = useDispatch<RootDispatch>();
 
   function onClick(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
     e.preventDefault();

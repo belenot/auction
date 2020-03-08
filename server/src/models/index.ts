@@ -22,7 +22,11 @@ export const User = mongoose.model<IUser>('User', UserSchema);
 
 const ProfileSchema = new Schema({
   wallet: { type: Number, required: true, default: 0 },
-  items: { type: Array, required: true, default: [] }
+  items: {
+    own: { type: Array, required: true, default: [] },
+    betted: { type: Array, required: true, default: [] },
+    bought: { type: Array, required: true, default: [] }
+  }
 })
 
 export const Profile = mongoose.model<IProfile>('Profile', ProfileSchema);

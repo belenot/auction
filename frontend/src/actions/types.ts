@@ -1,7 +1,8 @@
-import { ThunkAction } from "redux-thunk";
+import { ThunkAction, ThunkDispatch } from "redux-thunk";
 import { RootState } from "../reducers";
 import { LoginState, SystemState, AddItemState } from "../reducers/types";
-import { Item } from "../types";
+import { Item, Profile } from "../types";
+import { Action } from "redux";
 
 export const HANDLE_SIGNIN = 'HANDLE_SIGNIN';
 export const HANDLE_SIGNUP = 'HANDLE_SIGNUP';
@@ -20,6 +21,13 @@ export const CHANGE_PAGE = 'CHANGE_PAGE';
 export const HANDLE_ADD_ITEM = 'HANDLE_ADD_ITEM';
 export const ADD_ITEM_SUCCESS = 'ADD_ITEM_SUCCESS';
 export const ADD_ITEM_FAILURE = 'ADD_ITEM_FAILURE';
+export const SIGNOUT_SUCCESS = 'SIGNOUT_SUCCESS';
+export const SIGNOUT_FAILURE = 'SIGNOUT_FAILURE';
+export const GET_PROFILE_SUCCESS = 'GET_PROFILE_SUCCESS';
+export const GET_PROFILE_FAILURE = 'GET_PROFILE_FAILURE';
+export const HANDLE_CHANGE_WALLET = 'HANDLE_CHANGE_WALLET';
+export const CHANGE_WALLET_SUCCESS = 'CHANGE_WALLET_SUCCESS'
+export const CHANGE_WALLET_FAILURE = 'CHANGE_WALLET_FAILURE'
 
 export interface HandleSigninAction {
   type: typeof HANDLE_SIGNIN;
@@ -128,14 +136,52 @@ export interface AddItemFailure {
   }
 }
 
-/** READ ABOUT IT */
-export type AppThunkAction<ReturnType = void> =
-  ThunkAction<
-    ReturnType,
-    RootState,
-    unknown,
-    SyncAction
-  >
+export interface SignoutSuccess {
+  type: typeof SIGNOUT_SUCCESS
+}
 
-export type SyncAction = HandleSigninAction | HandleSignupAction | SigninRequest | SigninSuccess | SigninFailure | SignupRequest | SignupSuccess | SignupFailure | InitializeSuccess | InitializeFailure | LoginSwitch | GetItemsFailure | GetItemsSuccess | ChangePage | HandleAddItem | AddItemSuccess | AddItemFailure
+export interface SignoutFailure {
+  type: typeof SIGNOUT_FAILURE;
+}
+
+export interface GetProfileSuccess {
+  type: typeof GET_PROFILE_SUCCESS;
+  payload: {
+    profile: Profile;
+  }
+}
+
+export interface GetProfileFailure {
+  type: typeof GET_PROFILE_FAILURE;
+  payload: {
+    error: string;
+  }
+}
+
+export interface HandleChangeWallet {
+  type: typeof HANDLE_CHANGE_WALLET;
+  payload: {
+    wallet: number;
+  }
+}
+
+export interface ChangeWalletSuccess {
+  type: typeof CHANGE_WALLET_SUCCESS;
+  payload: {
+    wallet: number
+  }
+}
+
+export interface ChangeWalletFailure {
+  type: typeof CHANGE_WALLET_FAILURE;
+  payload: {
+    error: string;
+  }
+}
+
+/** READ ABOUT IT */
+export type AppThunkAction<ReturnType = any> = ThunkAction<ReturnType, RootState, unknown, SyncAction>
+
+export type SyncAction = HandleSigninAction | HandleSignupAction | SigninRequest | SigninSuccess | SigninFailure | SignupRequest | SignupSuccess | SignupFailure | InitializeSuccess | InitializeFailure | LoginSwitch | GetItemsFailure | GetItemsSuccess | ChangePage | HandleAddItem | AddItemSuccess | AddItemFailure | SignoutSuccess | SignoutFailure | GetProfileFailure | GetProfileSuccess | HandleChangeWallet | ChangeWalletSuccess | ChangeWalletFailure
 export type RootAction = SyncAction | AppThunkAction
+export type RootDispatch = ThunkDispatch<RootState, any, SyncAction>

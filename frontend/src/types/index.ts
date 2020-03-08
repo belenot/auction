@@ -7,3 +7,12 @@ export interface Item {
   owner_id: string;
   image: string;
 }
+
+export interface Profile {
+  wallet: number;
+  items: {
+    bought: Item[];
+    betted: Item[];
+    own: Item[];
+  }
+}
