@@ -6,7 +6,7 @@ import * as multer from 'multer';
 import * as path from 'path';
 import { Request } from 'express';
 
-const upload = multer({ dest: "uploads" });
+const upload = multer({ dest: "static/uploads" });
 
 router.route('/')
   .get((req, res) => {

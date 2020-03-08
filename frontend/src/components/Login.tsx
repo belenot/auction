@@ -28,20 +28,16 @@ export const Login: React.FC = (props) => {
   }
 
   return (
-    <Grid container style={{ ...fullHeight, ...loginStyle }} direction="column" justify="center" alignItems="center" spacing={5} >
-      {/* <Grid item>
-        <Typography color={"secondary"} variant={"h4"}>Log into</Typography>
-        <Typography color={"primary"} variant={"h2"}>Auction</Typography>
-      </Grid> */}
-      <Grid item>
+    <div>
+      <div>
         {state.page === "signin" ?
           <Signin /> :
           <Signup />
         }
-      </Grid>
-      <Grid item container justify="center">
-        <Button onClick={onClick}>{"To " + (state.page === "signin" ? "Sign Up" : "Sign In")}</Button>
-      </Grid>
-    </Grid >
+      </div>
+      <div >
+        <button onClick={onClick}>{"To " + (state.page === "signin" ? "Sign Up" : "Sign In")}</button>
+      </div>
+    </div>
   )
 }

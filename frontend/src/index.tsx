@@ -7,6 +7,7 @@ import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 import { Container, ThemeProvider } from '@material-ui/core';
 import { rootTheme } from './styles';
+import './index.css'
 
 const store = createStore(
   rootReducer,

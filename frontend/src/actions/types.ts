@@ -1,6 +1,6 @@
 import { ThunkAction } from "redux-thunk";
 import { RootState } from "../reducers";
-import { LoginState, SystemState } from "../reducers/types";
+import { LoginState, SystemState, AddItemState } from "../reducers/types";
 import { Item } from "../types";
 
 export const HANDLE_SIGNIN = 'HANDLE_SIGNIN';
@@ -17,6 +17,9 @@ export const INITIALIZE_FAILURE = 'INITIALIZE_FAILURE';
 export const GET_ITEMS_SUCCESS = 'GET_ITEMS_SUCCESS'
 export const GET_ITEMS_FAILURE = 'GET_ITEMS_FAILURE'
 export const CHANGE_PAGE = 'CHANGE_PAGE';
+export const HANDLE_ADD_ITEM = 'HANDLE_ADD_ITEM';
+export const ADD_ITEM_SUCCESS = 'ADD_ITEM_SUCCESS';
+export const ADD_ITEM_FAILURE = 'ADD_ITEM_FAILURE';
 
 export interface HandleSigninAction {
   type: typeof HANDLE_SIGNIN;
@@ -83,6 +86,13 @@ export interface InitializeFailure {
   type: typeof INITIALIZE_FAILURE;
 }
 
+export interface HandleAddItem {
+  type: typeof HANDLE_ADD_ITEM
+  payload: {
+    state: AddItemState
+  }
+}
+
 export interface GetItemsSuccess {
   type: typeof GET_ITEMS_SUCCESS;
   payload: {
@@ -104,6 +114,20 @@ export interface ChangePage {
   }
 }
 
+export interface AddItemSuccess {
+  type: typeof ADD_ITEM_SUCCESS;
+  payload: {
+    item: Item;
+  }
+}
+
+export interface AddItemFailure {
+  type: typeof ADD_ITEM_FAILURE;
+  payload: {
+    error: string;
+  }
+}
+
 /** READ ABOUT IT */
 export type AppThunkAction<ReturnType = void> =
   ThunkAction<
@@ -113,5 +137,5 @@ export type AppThunkAction<ReturnType = void> =
     SyncAction
   >
 
-export type SyncAction = HandleSigninAction | HandleSignupAction | SigninRequest | SigninSuccess | SigninFailure | SignupRequest | SignupSuccess | SignupFailure | InitializeSuccess | InitializeFailure | LoginSwitch | GetItemsFailure | GetItemsSuccess | ChangePage
+export type SyncAction = HandleSigninAction | HandleSignupAction | SigninRequest | SigninSuccess | SigninFailure | SignupRequest | SignupSuccess | SignupFailure | InitializeSuccess | InitializeFailure | LoginSwitch | GetItemsFailure | GetItemsSuccess | ChangePage | HandleAddItem | AddItemSuccess | AddItemFailure
 export type RootAction = SyncAction | AppThunkAction

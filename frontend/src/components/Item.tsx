@@ -10,47 +10,29 @@ export interface ItemProps {
   children?: any
 }
 
-const itemCardStyle: React.CSSProperties = {
-  boxShadow: '0 0 10px white'
-}
-
-function itemCardHeaderStyle(color: string): React.CSSProperties {
-  return {
-    background: color
-  }
-}
-type CSS = React.CSSProperties;
-
 export const Item: React.FC<ItemProps> = (props: ItemProps) => {
   const { item } = props;
 
-  const styles: { root: CSS, cardHeader: CSS } = {
-    root: {
-      boxShadow: "0 0 10px white",
-    },
-    cardHeader: {
-      background: auctionTheme.headerBackgroundColor
-    }
-  }
-
   return (
-    <Card style={styles.root}>
-      <CardHeader
-        title={item.name}
-        subheader={item.state}
-        style={styles.cardHeader}
-      />
-      <CardContent>
-        <Typography color={'primary'}>Description:</Typography>
-        <Typography color={'secondary'}>{item.description}</Typography>
-        <Typography color={'primary'}>Price:</Typography>
-        <Typography color={'secondary'}>{item.price}$</Typography>
-      </CardContent>
-      <CardActions>
-        <Button variant={'outlined'} color={'primary'}>Buy</Button>
-        <Button variant={'outlined'} color={'primary'}>Bet</Button>
-        <Button variant={'text'} color={'primary'}>View</Button>
-      </CardActions>
-    </Card >
+    <div >
+      <div>
+        <label>{item.name}</label>
+        <label>{item.state}</label>
+      </div>
+      <div>
+        <div className="item-image" style={{ background: `url(${item.image})` }} />
+      </div>
+      <div>
+        <label>Description:</label>
+        <label>{item.description}</label>
+        <label>Price:</label>
+        <label>{item.price}$</label>
+      </div>
+      <div>
+        <button>Buy</button>
+        <button>Bet</button>
+        <button>View</button>
+      </div>
+    </div >
   )
 }

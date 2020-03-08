@@ -13,11 +13,16 @@ module.exports = {
         test: /\.tsx?/,
         exclude: [/node_modules/],
         loader: 'ts-loader'
+      },
+      {
+        test: /\.css/,
+        exclude: [/node_modules/],
+        loader: ['style-loader', 'css-loader']
       }
     ]
   },
   resolve: {
-    extensions: ['.ts', '.tsx', '.js', '.jsx']
+    extensions: ['.ts', '.tsx', '.js', '.jsx', '.css']
   },
   devtool: 'source-map'
 }

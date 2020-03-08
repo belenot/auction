@@ -15,12 +15,12 @@ export const ItemsList: React.FC = (props: any) => {
   }, []);
 
   return (
-    <Grid container spacing={4}>
+    <div >
       {state.items.map(item =>
-        <Grid key={item._id} item xs={3}>
+        <div key={item._id}>
           <Item item={item} onBuyClick={() => { return {} }} />
-        </Grid>
+        </div>
       )}
-    </Grid>
+    </div>
   )
 }

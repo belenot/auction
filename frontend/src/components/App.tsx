@@ -7,9 +7,9 @@ import { RootAction } from '../actions/types';
 import { Login } from './Login';
 import { Grid, AppBar, Toolbar, Typography, Button } from '@material-ui/core';
 import { fullHeight } from '../styles';
-import { LoginBanner } from './LoginBanner';
 import { ItemsList } from './ItemsList';
 import { AddItem } from './AddItem';
+import { Header } from './Header';
 
 
 const App: React.FC<any> = () => {
@@ -21,37 +21,26 @@ const App: React.FC<any> = () => {
     }
   }, [])
   return (
-    <Grid container style={fullHeight}>
+    <div>
       {state.loggedIn ?
-        <Grid item xs={12} container direction='column'>
-          <Grid item>
-            <AppBar>
-              <Toolbar>
-                <Typography>{state.username}</Typography>
-                <Typography>Wallet: {state.wallet}</Typography>
-                <Button onClick={() => dispatch(changePage('ADD_ITEM'))}>Add item</Button>
-                <Button onClick={() => dispatch(changePage('PROFILE'))}>Profile</Button>
-                <Button onClick={() => dispatch(changePage('ITEMS_LIST'))}>Items List</Button>
-              </Toolbar>
-            </AppBar>
-          </Grid>
-          <Grid item>
+        <div>
+          <div>
+            <Header />
+          </div>
+          <div>
             {state.page == 'ITEMS_LIST' && <ItemsList />}
             {state.page == 'ADD_ITEM' && <AddItem />}
             {state.page == 'PROFILE' && <div>profile</div>}
-          </Grid>
-        </Grid>
+          </div>
+        </div>
         :
         <React.Fragment>
-          <Grid item xs={7}>
-            <LoginBanner />
-          </Grid>
-          <Grid item xs={5}>
+          <div>
             <Login />
-          </Grid>
+          </div>
         </React.Fragment>
       }
-    </Grid>
+    </div>
   )
 }
 

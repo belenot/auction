@@ -35,3 +35,12 @@ export interface LoginState {
 export interface ItemsListState {
   items: Item[]
 }
+
+export interface AddItemState {
+  name: string;
+  description: string;
+  price: number;
+  error: string;
+  isRequest: boolean;
+  image?: File
+}
