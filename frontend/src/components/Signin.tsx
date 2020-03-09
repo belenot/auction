@@ -22,17 +22,17 @@ export const Signin: React.FC = (props) => {
   return (
     <form>
       <div>
-        <label>Log into</label>
-        <label>Auction</label>
+        <label className="primary-text centered">Log into</label>
+        <label className="fancy-text centered">Auction</label>
       </div>
       <div>
-        <input placeholder="Username" type='text' name='username' value={state.username} onChange={(e) => changeUsername(e.target.value)} />
+        <input className="form-control" placeholder="Username" type='text' name='username' value={state.username} onChange={(e) => changeUsername(e.target.value)} />
       </div>
       <div>
-        <input placeholder="Password" type='password' name='password' value={state.password} onChange={(e) => changePassword(e.target.value)} />
+        <input className="form-control" placeholder="Password" type='password' name='password' value={state.password} onChange={(e) => changePassword(e.target.value)} />
       </div>
       <div>
-        <button color="primary" type='submit' onClick={e => onSubmit(e)}>Sign In</button>
+        <button className="btn btn-primary" color="primary" type='submit' onClick={e => onSubmit(e)}>Sign In</button>
       </div>
     </form>
   )

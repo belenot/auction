@@ -29,11 +29,11 @@ export const AddItem: React.FC = () => {
 
   return (
     <form onSubmit={e => onSubmit(e)}>
-      <input value={state.name} onChange={(e) => handleInput('name', e.target.value)} type='text' placeholder="Name" name='name' />
-      <input value={state.description} onChange={(e) => handleInput('description', e.target.value)} placeholder="Description" name='description' />
-      <input value={state.price} onChange={(e) => handleInput('price', e.target.value)} placeholder="Price" name='price' />
-      <input onChange={e => handleFile(e)} type='file' name='image' />
-      <button type='submit'>Add</button>
+      <input className="form-control" value={state.name} onChange={(e) => handleInput('name', e.target.value)} type='text' placeholder="Name" name='name' />
+      <input className="form-control" value={state.description} onChange={(e) => handleInput('description', e.target.value)} placeholder="Description" name='description' />
+      <input className="form-control" value={state.price} onChange={(e) => handleInput('price', e.target.value)} placeholder="Price" name='price' />
+      <input className="form-control" onChange={e => handleFile(e)} type='file' name='image' />
+      <button className="btn btn-primary" type='submit'>Add</button>
     </form>
   )
 }

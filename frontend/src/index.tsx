@@ -8,6 +8,7 @@ import thunk from 'redux-thunk';
 import { Container, ThemeProvider } from '@material-ui/core';
 import { rootTheme } from './styles';
 import './index.css'
+import 'bootstrap/dist/css/bootstrap.min.css'
 
 const store = createStore(
   rootReducer,
@@ -21,9 +22,7 @@ window.onload = () => {
   ReactDOM.render(
     <Provider store={store}>
       <ThemeProvider theme={rootTheme}>
-        <Container>
-          <App />
-        </Container>
+        <App />
       </ThemeProvider>
     </Provider>,
     document.querySelector('#root')

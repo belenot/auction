@@ -22,24 +22,22 @@ const App: React.FC<any> = () => {
     }
   }, [])
   return (
-    <div>
+    <div id="root-container">
       {state.loggedIn ?
-        <div>
-          <div>
+        <div id="main-container" className="container">
+          <div className="container">
             <Header />
           </div>
-          <div>
+          <div className="container">
             {state.page == 'ITEMS_LIST' && <ItemsList />}
             {state.page == 'ADD_ITEM' && <AddItem />}
             {state.page == 'PROFILE' && <Profile />}
           </div>
         </div>
         :
-        <React.Fragment>
-          <div>
-            <Login />
-          </div>
-        </React.Fragment>
+        <div className="container">
+          <Login />
+        </div>
       }
     </div>
   )

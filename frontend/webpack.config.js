@@ -15,8 +15,9 @@ module.exports = {
         loader: 'ts-loader'
       },
       {
-        test: /\.css/,
-        exclude: [/node_modules/],
+        test: /\.css$/,
+        // commented for loading bootstrap
+        // exclude: [/node_modules/], 
         loader: ['style-loader', 'css-loader']
       }
     ]

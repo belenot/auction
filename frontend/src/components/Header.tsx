@@ -9,14 +9,12 @@ export const Header: React.FC = () => {
   const dispatch = useDispatch<RootDispatch>();
   return (
     <header>
-      <div>
-        <label>{state.username}</label>
-        <label>Wallet: {state.wallet}</label>
-        <button onClick={() => dispatch(changePage('ADD_ITEM'))}>Add item</button>
-        <button onClick={() => dispatch(changePage('PROFILE'))}>Profile</button>
-        <button onClick={() => dispatch(changePage('ITEMS_LIST'))}>Items List</button>
-        <button onClick={() => dispatch(signoutRequestAsync())}>Sign Out</button>
-      </div>
+      <label className="primary-text">{state.username}</label>
+      <label className="primary-text">Wallet: {state.wallet}</label>
+      <button className="btn btn-primary" onClick={() => dispatch(changePage('ADD_ITEM'))}>Add item</button>
+      <button className="btn btn-primary" onClick={() => dispatch(changePage('PROFILE'))}>Profile</button>
+      <button className="btn btn-primary" onClick={() => dispatch(changePage('ITEMS_LIST'))}>Items List</button>
+      <button className="btn btn-primary" onClick={() => dispatch(signoutRequestAsync())}>Sign Out</button>
     </header>
   )
 }

@@ -14,24 +14,32 @@ export const Item: React.FC<ItemProps> = (props: ItemProps) => {
   const { item } = props;
 
   return (
-    <div >
-      <div>
-        <label>{item.name}</label>
-        <label>{item.state}</label>
+    <div className="item-container papered" >
+      <div className="item-container-header">
+        <div className="centered">
+          <label className="primary-text">{item.name}</label>
+        </div>
+        <div className="centered">
+          <label className="primary-text">{item.state}</label>
+        </div>
       </div>
-      <div>
-        <div className="item-image" style={{ background: `url(${item.image})` }} />
+      <div className="item-container-image">
+        <img className="item-image" src={`${item.image}`} />
       </div>
-      <div>
-        <label>Description:</label>
-        <label>{item.description}</label>
-        <label>Price:</label>
-        <label>{item.price}$</label>
+      <div className="item-container-content">
+        <div>
+          <label>Description:</label>
+          <label>{item.description}</label>
+        </div>
+        <div>
+          <label>Price:</label>
+          <label>{item.price}$</label>
+        </div>
       </div>
-      <div>
-        <button disabled={item.state != 'active'} onClick={props.onBuyClick}>Buy</button>
-        <button disabled>Bet</button>
-        <button disabled>View</button>
+      <div className="item-container-buttons">
+        <button className="btn btn-primary" disabled={item.state != 'active'} onClick={props.onBuyClick}>Buy</button>
+        <button className="btn btn-primary" disabled>Bet</button>
+        <button className="btn btn-primary" disabled>View</button>
       </div>
     </div >
   )

@@ -22,17 +22,17 @@ export const Signup: React.FC = (props) => {
   return (
     <form>
       <div>
-        <label>Welcome to</label>
-        <label>Auction</label>
+        <label className="primary-text centered">Welcome to</label>
+        <label className="fancy-text centered">Auction</label>
       </div>
       <div>
-        <input placeholder="Username" type='text' name='username' value={state.username} onChange={(e) => changeUsername(e.target.value)} />
+        <input className="form-control" placeholder="Username" type='text' name='username' value={state.username} onChange={(e) => changeUsername(e.target.value)} />
       </div>
       <div>
-        <input placeholder="Password" type='password' name='password' value={state.password} onChange={(e) => changePassword(e.target.value)} />
+        <input className="form-control" placeholder="Password" type='password' name='password' value={state.password} onChange={(e) => changePassword(e.target.value)} />
       </div>
       <div>
-        <button type='submit' onClick={e => onSubmit(e)}>Sign Up</button>
+        <button className="btn btn-primary" type='submit' onClick={e => onSubmit(e)}>Sign Up</button>
       </div>
     </form>
   )

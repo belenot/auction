@@ -28,15 +28,17 @@ export const Login: React.FC = (props) => {
   }
 
   return (
-    <div>
+    <div id="login-container">
       <div>
-        {state.page === "signin" ?
-          <Signin /> :
-          <Signup />
-        }
-      </div>
-      <div >
-        <button onClick={onClick}>{"To " + (state.page === "signin" ? "Sign Up" : "Sign In")}</button>
+        <div>
+          {state.page === "signin" ?
+            <Signin /> :
+            <Signup />
+          }
+        </div>
+        <div >
+          <button className="btn btn-secondary" onClick={onClick}>{"To " + (state.page === "signin" ? "Sign Up" : "Sign In")}</button>
+        </div>
       </div>
     </div>
   )

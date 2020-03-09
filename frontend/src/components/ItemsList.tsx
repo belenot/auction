@@ -20,11 +20,9 @@ export const ItemsList: React.FC = (props: any) => {
   }
 
   return (
-    <div >
+    <div id="items-list-container">
       {state.items.map(item =>
-        <div key={item._id}>
-          <Item item={item} onBuyClick={() => onBuy(item._id)} />
-        </div>
+        <Item key={item._id} item={item} onBuyClick={() => onBuy(item._id)} />
       )}
     </div>
   )
