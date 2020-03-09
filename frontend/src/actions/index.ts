@@ -1,7 +1,7 @@
-import { SyncAction, HANDLE_SIGNIN, HANDLE_SIGNUP, AppThunkAction, SIGNIN_REQUEST, SIGNIN_SUCCESS, SIGNIN_FAILURE, INITIALIZE_SUCCESS, INITIALIZE_FAILURE, SIGNUP_REQUEST, SIGNUP_FAILURE, SIGNUP_SUCCESS, LoginSwitch, GET_ITEMS_SUCCESS, GET_ITEMS_FAILURE, CHANGE_PAGE, HANDLE_ADD_ITEM, ADD_ITEM_SUCCESS, ADD_ITEM_FAILURE, SIGNOUT_SUCCESS, SIGNOUT_FAILURE, GET_PROFILE_SUCCESS, GET_PROFILE_FAILURE, HANDLE_CHANGE_WALLET, CHANGE_WALLET_SUCCESS, CHANGE_WALLET_FAILURE } from "./types";
+import { SyncAction, HANDLE_SIGNIN, HANDLE_SIGNUP, AppThunkAction, SIGNIN_REQUEST, SIGNIN_SUCCESS, SIGNIN_FAILURE, INITIALIZE_SUCCESS, INITIALIZE_FAILURE, SIGNUP_REQUEST, SIGNUP_FAILURE, SIGNUP_SUCCESS, LoginSwitch, GET_ITEMS_SUCCESS, GET_ITEMS_FAILURE, CHANGE_PAGE, HANDLE_ADD_ITEM, ADD_ITEM_SUCCESS, ADD_ITEM_FAILURE, SIGNOUT_SUCCESS, SIGNOUT_FAILURE, GET_PROFILE_SUCCESS, GET_PROFILE_FAILURE, HANDLE_CHANGE_WALLET, CHANGE_WALLET_SUCCESS, CHANGE_WALLET_FAILURE, InitializeSuccess } from "./types";
 import { default as axios } from 'axios';
 import { LoginState, SystemState, AddItemState } from "../reducers/types";
-import { Item, Profile } from "../types";
+import { Item, Profile, User } from "../types";
 
 export function handleSignin(username: string, password: string): SyncAction {
   return { type: HANDLE_SIGNIN, payload: { username, password } }
@@ -48,9 +48,10 @@ export function loginSwitch(page: LoginState['page']): SyncAction {
   }
 }
 
-export function initializeSuccess(): SyncAction {
+export function initializeSuccess(data: InitializeSuccess['payload']): SyncAction {
   return {
-    type: INITIALIZE_SUCCESS
+    type: INITIALIZE_SUCCESS,
+    payload: data
   }
 }
 
@@ -171,13 +172,33 @@ export function changeWalletFailure(error: string): SyncAction {
   }
 }
 
+export function buySuccess(item: Item, profile: Profile): SyncAction {
+  return {
+    type: "BUY_SUCCESS",
+    payload: {
+      item, profile
+    }
+  }
+}
+
+export function buyFailure(error: string): SyncAction {
+  return {
+    type: "BUY_FAILURE",
+    payload: {
+      error
+    }
+  }
+}
+
 export function signinRequestAsync(username: string, password: string): AppThunkAction {
   return function (dispatch, getState) {
     dispatch(signinRequest())
     axios.post('/users', { username, password })
       .then((r) => {
         if (r.status >= 200 && r.status < 300) {
-          axios.get('/users').then(r => dispatch(signinSuccess(r.data.id, r.data.username)))
+          axios.get('/users')
+            .then(r => dispatch(signinSuccess(r.data.id, r.data.username)))
+            .then(() => dispatch(initializeRequestAsync()));
         } else {
           dispatch(signinFailure(r.statusText))
         }
@@ -203,16 +224,21 @@ export function signupRequestAsync(username: string, password: string): AppThunk
 
 export function initializeRequestAsync(): AppThunkAction {
   return async function (dispatch, getState) {
-    axios.get('/users')
-      .then(r => {
-        dispatch(initializeSuccess())
-        return r;
-      }).then(r => {
-        if (r.data._id) {
-          dispatch(signinSuccess(r.data.id, r.data.username))
-        } else { }
-      })
-      .catch(err => dispatch(initializeSuccess()))
+    try {
+      const user = (await axios.get('/users')).data as User;
+      const profile = (await axios.get('/users/profile')).data as Profile;
+      dispatch(initializeSuccess(
+        {
+          authorized: true,
+          username: user.username,
+          userId: user._id,
+          wallet: profile.wallet,
+          items: profile.items
+        }
+      ))
+    } catch (e) {
+      dispatch(initializeSuccess({ authorized: false }));
+    }
   }
 }
 
@@ -277,5 +303,12 @@ export function changeWalletRequestAsync(oldWallet: number): AppThunkAction {
     } catch (e) {
       return dispatch(changeWalletFailure(e));
     }
+  }
+}
+
+export function buyRequestAsync(id: Item['_id']): AppThunkAction {
+  return async (dispatch, getState) => {
+    const { item, profile } = (await axios.post(`/items/${id}/buy`)).data as { item: Item, profile: Profile };
+    dispatch(buySuccess(item, profile));
   }
 }

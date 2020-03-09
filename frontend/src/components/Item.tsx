@@ -6,7 +6,7 @@ import { auctionTheme } from '../styles';
 
 export interface ItemProps {
   item: ItemInterface;
-  onBuyClick: () => {};
+  onBuyClick: () => void;
   children?: any
 }
 
@@ -29,9 +29,9 @@ export const Item: React.FC<ItemProps> = (props: ItemProps) => {
         <label>{item.price}$</label>
       </div>
       <div>
-        <button>Buy</button>
-        <button>Bet</button>
-        <button>View</button>
+        <button disabled={item.state != 'active'} onClick={props.onBuyClick}>Buy</button>
+        <button disabled>Bet</button>
+        <button disabled>View</button>
       </div>
     </div >
   )

@@ -1,6 +1,6 @@
 import { createStore } from 'redux';
 import { SystemState } from './types';
-import { SyncAction, SIGNOUT_SUCCESS, GET_PROFILE_SUCCESS, CHANGE_WALLET_SUCCESS } from '../actions/types';
+import { SyncAction, SIGNOUT_SUCCESS, GET_PROFILE_SUCCESS, CHANGE_WALLET_SUCCESS, BUY_SUCCESS } from '../actions/types';
 
 const initState: SystemState = {
   loggedIn: false,
@@ -19,7 +19,15 @@ const initState: SystemState = {
 export function systemReducer(state = initState, action: SyncAction): SystemState {
   switch (action.type) {
     case "INITIALIZE_SUCCESS":
-      return { ...state, initialized: true }
+      return {
+        ...state,
+        initialized: true,
+        items: action.payload.items || initState.items,
+        loggedIn: action.payload.authorized,
+        userId: action.payload.userId || initState.userId,
+        username: action.payload.username || initState.username,
+        wallet: action.payload.wallet || initState.wallet
+      }
     case "INITIALIZE_FAILURE":
       return { ...state, initialized: false }
     case "SIGNIN_SUCCESS":
@@ -32,6 +40,9 @@ export function systemReducer(state = initState, action: SyncAction): SystemStat
       return { ...state, wallet: action.payload.wallet, page: 'ITEMS_LIST' }
     case SIGNOUT_SUCCESS:
       return { ...initState }
+    case BUY_SUCCESS: {
+      return { ...state, ...action.payload.profile }
+    }
     default:
       return state
   }

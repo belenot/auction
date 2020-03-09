@@ -28,6 +28,8 @@ export const GET_PROFILE_FAILURE = 'GET_PROFILE_FAILURE';
 export const HANDLE_CHANGE_WALLET = 'HANDLE_CHANGE_WALLET';
 export const CHANGE_WALLET_SUCCESS = 'CHANGE_WALLET_SUCCESS'
 export const CHANGE_WALLET_FAILURE = 'CHANGE_WALLET_FAILURE'
+export const BUY_SUCCESS = 'BUY_SUCCESS';
+export const BUY_FAILURE = 'BUY_FAILURE';
 
 export interface HandleSigninAction {
   type: typeof HANDLE_SIGNIN;
@@ -88,6 +90,17 @@ export interface LoginSwitch {
 
 export interface InitializeSuccess {
   type: typeof INITIALIZE_SUCCESS;
+  payload: {
+    authorized: boolean;
+    userId?: string;
+    username?: string;
+    wallet?: number;
+    items?: {
+      betted: Item[],
+      bought: Item[],
+      own: Item[]
+    }
+  }
 }
 
 export interface InitializeFailure {
@@ -179,9 +192,24 @@ export interface ChangeWalletFailure {
   }
 }
 
+export interface BuySuccess {
+  type: typeof BUY_SUCCESS;
+  payload: {
+    item: Item;
+    profile: Profile;
+  }
+}
+
+export interface BuyFailure {
+  type: typeof BUY_FAILURE;
+  payload: {
+    error: string
+  }
+}
+
 /** READ ABOUT IT */
 export type AppThunkAction<ReturnType = any> = ThunkAction<ReturnType, RootState, unknown, SyncAction>
 
-export type SyncAction = HandleSigninAction | HandleSignupAction | SigninRequest | SigninSuccess | SigninFailure | SignupRequest | SignupSuccess | SignupFailure | InitializeSuccess | InitializeFailure | LoginSwitch | GetItemsFailure | GetItemsSuccess | ChangePage | HandleAddItem | AddItemSuccess | AddItemFailure | SignoutSuccess | SignoutFailure | GetProfileFailure | GetProfileSuccess | HandleChangeWallet | ChangeWalletSuccess | ChangeWalletFailure
+export type SyncAction = HandleSigninAction | HandleSignupAction | SigninRequest | SigninSuccess | SigninFailure | SignupRequest | SignupSuccess | SignupFailure | InitializeSuccess | InitializeFailure | LoginSwitch | GetItemsFailure | GetItemsSuccess | ChangePage | HandleAddItem | AddItemSuccess | AddItemFailure | SignoutSuccess | SignoutFailure | GetProfileFailure | GetProfileSuccess | HandleChangeWallet | ChangeWalletSuccess | ChangeWalletFailure | BuySuccess | BuyFailure
 export type RootAction = SyncAction | AppThunkAction
 export type RootDispatch = ThunkDispatch<RootState, any, SyncAction>

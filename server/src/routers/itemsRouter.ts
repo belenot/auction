@@ -30,4 +30,20 @@ router.route('/')
     res.status(200).json();
   })
 
+router.post("/:id/buy", async (req, res) => {
+  const user = req.user as IUser;
+  const item = await Item.findById(req.params['id']);
+  const profile = await Profile.findById(user.profile_id);
+  item.state = 'sold';
+  profile.items.bought = [...profile.items.bought, item]
+  profile.wallet = profile.wallet - item.price;
+  try {
+    await profile.save();
+    await item.save();
+  } catch (e) {
+    res.status(500).json();
+  }
+  res.json({ item, profile });
+})
+
 export const itemsRouter = router

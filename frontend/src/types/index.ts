@@ -16,3 +16,9 @@ export interface Profile {
     own: Item[];
   }
 }
+
+export interface User {
+  _id: string;
+  username: string;
+  profile_id: string;
+}
